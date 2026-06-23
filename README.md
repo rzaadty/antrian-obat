@@ -17,8 +17,7 @@
   <a href="#-tentang-proyek">Tentang</a> •
   <a href="#-fitur-utama">Fitur</a> •
   <a href="#-struktur-file">Struktur File</a> •
-  <a href="#-struktur-database">Database</a> •
-  <a href="#-tech-stack">Tech Stack</a>
+  <a href="#-struktur-database">Database</a>
 </p>
 
 ---
@@ -27,33 +26,28 @@
 
 **QueuePro** adalah sistem antrian digital terpadu yang dirancang khusus untuk rumah sakit, klinik, dan fasilitas layanan kesehatan. Sistem ini menggantikan antrian konvensional dengan solusi digital yang modern, efisien, dan profesional.
 
----
-
 ## ✨ Fitur Utama
 
 ### 🌐 Untuk Pasien (Layar Display)
-
-- 📺 **Layar Antrian Real-time** - Auto-refresh AJAX tanpa flicker
-- 🔔 **Current Queue Hero** - Highlight nomor yang sedang dipanggil
-- 📊 **Status Badge** - Menunggu / Menuju Loket / Selesai
-- 🕐 **Jam & Tanggal Live** - Format Bahasa Indonesia
-- 📢 **Running Text** - Informasi & pengumuman berjalan
+* 📺 **Layar Antrian Real-time** - Auto-refresh AJAX tanpa flicker
+* 🔔 **Current Queue Hero** - Highlight nomor yang sedang dipanggil
+* 📊 **Status Badge** - Menunggu / Menuju Loket / Selesai
+* 🕐 **Jam & Tanggal Live** - Format Bahasa Indonesia
+* 📢 **Running Text** - Informasi & pengumuman berjalan
 
 ### 👨‍💼 Untuk Admin/Petugas
-
-- 🎛️ **Dashboard Interaktif** - Statistik antrian real-time
-- 🔊 **Voice Calling** - Panggilan otomatis dengan Text-to-Speech
-- ⏱️ **Call Timer** - Countdown 20 detik saat memanggil
-- 🔒 **Locking System** - Mencegah konflik antar petugas
-- 🔍 **Search Filter** - Cari pasien berdasarkan nama/resep
-- 📱 **Responsive Design** - Desktop & mobile friendly
+* 🎛️ **Dashboard Interaktif** - Statistik antrian real-time
+* 🔊 **Voice Calling** - Panggilan otomatis dengan Text-to-Speech
+* ⏱️ **Call Timer** - Countdown 20 detik saat memanggil
+* 🔒 **Locking System** - Mencegah konflik antar petugas
+* 🔍 **Search Filter** - Cari pasien berdasarkan nama/resep
+* 📱 **Responsive Design** - Desktop & mobile friendly
 
 ### 👑 Untuk Superadmin
-
-- 👥 **Manajemen User** - CRUD pegawai lengkap
-- 🛡️ **Role Management** - Superadmin & Admin
-- 🏪 **Loket Assignment** - Penugasan loket per admin
-- 🗑️ **Full Access** - Hapus & edit semua antrian
+* 👥 **Manajemen User** - CRUD pegawai lengkap
+* 🛡️ **Role Management** - Superadmin & Admin
+* 🏪 **Loket Assignment** - Penugasan loket per admin
+* 🗑️ **Full Access** - Hapus & edit semua antrian
 
 ---
 
@@ -61,7 +55,7 @@
 
 Struktur file QueuePro mengikuti **konvensi Laravel** dengan beberapa penyesuaian untuk kebutuhan spesifik sistem antrian:
 
-```
+```text
 queuepro/
 ├── app/
 │   ├── Http/
@@ -81,65 +75,69 @@ queuepro/
 │
 ├── resources/
 │   └── views/
-│       ├── welcome.blade.php           # Layar TV ruang tunggu
-│       ├── login.blade.php             # Halaman login
-│       └── admin/
-│           ├── dashboard.blade.php     # Dashboard admin
-│           └── users/
-│               └── index.blade.php     # Manajemen user
+│       ├── admin/
+│       │   └── dashboard.blade.php     # Dashboard admin
+│       ├── auth/
+│       │   ├── index.blade.php         # View Manajemen User
+│       │   └── login.blade.php         # Halaman login
+│       └── welcome.blade.php           # Layar TV ruang tunggu / Display obat
 │
 ├── routes/
 │   └── web.php                         # Definisi route aplikasi
 │
 └── public/                             # Asset publik
+
 ```
 
 ### 🎯 Alasan Pemilihan Struktur
 
 #### 1. Pemisahan Controllers Berdasarkan Domain
 
-```
+```text
 AuthController.php   → Menghandle autentikasi & user
 QueueController.php  → Menghandle antrian & panggilan
+
 ```
 
 **Alasan:**
 
-- ✅ **Single Responsibility Principle** - Setiap controller fokus pada satu domain
-- ✅ **Mudah di-maintain** - Perubahan di antrian tidak mempengaruhi autentikasi
-- ✅ **Scalable** - Bisa ditambah controller baru (misal: `ReportController`) tanpa konflik
-- ❌ **Alternatif yang Ditolak:** Satu controller untuk semua → akan menjadi "God Controller" yang sulit di-maintain
+* ✅ **Single Responsibility Principle** - Setiap controller fokus pada satu domain
+* ✅ **Mudah di-maintain** - Perubahan di antrian tidak mempengaruhi autentikasi
+* ✅ **Scalable** - Bisa ditambah controller baru (misal: `ReportController`) tanpa konflik
+* ❌ **Alternatif yang Ditolak:** Satu controller untuk semua → akan menjadi "God Controller" yang sulit di-maintain
 
 #### 2. Struktur Views Hierarkis
 
-```
+```text
 views/
-├── welcome.blade.php        # Public (tanpa prefix)
-├── login.blade.php          # Public (tanpa prefix)
-└── admin/                   # Protected (folder admin)
-    ├── dashboard.blade.php
-    └── users/
+├── admin/                   # Protected (folder admin)
+│   └── dashboard.blade.php  # Dashboard Admin
+├── auth/                    # Folder Autentikasi & Manajemen
+│   ├── index.blade.php      # Halaman Manajemen User
+│   └── login.blade.php      # Halaman Login
+└── welcome.blade.php        # Layar antrian / display obat (Public)
+
 ```
 
 **Alasan:**
 
-- ✅ **Pemisahan Public vs Protected** - Views public di root, admin di folder `admin/`
-- ✅ **Organisasi Logis** - Semua views admin terkumpul dalam satu folder
-- ✅ **Mudah Ditemukan** - Developer tahu persis di mana mencari view tertentu
-- ✅ **Scalable** - Bisa ditambah folder `admin/reports/`, `admin/settings/`, dll
+* ✅ **Pemisahan Public vs Protected** - Views public di root, manajemen user & login di folder `auth/`, dashboard di folder `admin/`
+* ✅ **Organisasi Logis** - Sesuai dengan pembagian peran dan fungsi aplikasi
+* ✅ **Mudah Ditemukan** - Developer tahu persis di mana mencari view tertentu tanpa harus membuat sub-folder yang terlalu dalam
 
 #### 3. Models yang Sederhana
 
-```
+```text
 Queue.php  → Hanya data antrian
 User.php   → Hanya data user (extend Authenticatable)
+
 ```
 
 **Alasan:**
 
-- ✅ **KISS Principle** - Model hanya berisi data dan relasi, business logic di controller
-- ✅ **Eloquent Relationship** - `Queue` belongsTo `User` (admin yang menangani)
-- ❌ **Alternatif yang Ditolak:** Fat models dengan banyak method → sulit di-test
+* ✅ **KISS Principle** - Model hanya berisi data dan relasi, business logic di controller
+* ✅ **Eloquent Relationship** - `Queue` belongsTo `User` (admin yang menangani)
+* ❌ **Alternatif yang Ditolak:** Fat models dengan banyak method → sulit di-test
 
 #### 4. Middleware Role-Based
 
@@ -147,14 +145,15 @@ User.php   → Hanya data user (extend Authenticatable)
 Route::middleware(['role:superadmin'])->group(function () {
     // Route khusus superadmin
 });
+
 ```
 
 **Alasan:**
 
-- ✅ **Reusable** - Middleware bisa dipakai di banyak route
-- ✅ **Clean Routes** - Route file tetap ringkas dan mudah dibaca
-- ✅ **Centralized Logic** - Logika pengecekan role di satu tempat
-- ❌ **Alternatif yang Ditolak:** Pengecekan role di setiap controller → duplikasi kode
+* ✅ **Reusable** - Middleware bisa dipakai di banyak route
+* ✅ **Clean Routes** - Route file tetap ringkas dan mudah dibaca
+* ✅ **Centralized Logic** - Logika pengecekan role di satu tempat
+* ❌ **Alternatif yang Ditolak:** Pengecekan role di setiap controller → duplikasi kode
 
 ---
 
@@ -164,12 +163,12 @@ Database QueuePro dirancang dengan prinsip **normalisasi** dan **integritas data
 
 ### 📊 Diagram Relasi
 
-```
+```text
 ┌─────────────────┐         ┌─────────────────────┐
-│     users       │         │       queues        │
+│      users      │         │       queues        │
 ├─────────────────┤         ├─────────────────────┤
 │ id (PK)         │◄────────│ admin_id (FK)       │
-│ name            │    1:N  │ id (PK)             │
+│ name            │   1:N   │ id (PK)             │
 │ username        │         │ queue_date          │
 │ password        │         │ queue_number        │
 │ role            │         │ no_resep            │
@@ -177,6 +176,7 @@ Database QueuePro dirancang dengan prinsip **normalisasi** dan **integritas data
 │ remember_token  │         │ status              │
 │ timestamps      │         │ timestamps          │
 └─────────────────┘         └─────────────────────┘
+
 ```
 
 ### 📋 Detail Tabel
@@ -184,7 +184,7 @@ Database QueuePro dirancang dengan prinsip **normalisasi** dan **integritas data
 #### Tabel `users`
 
 | Kolom | Tipe | Alasan |
-|-------|------|--------|
+| --- | --- | --- |
 | `id` | BIGINT UNSIGNED PK | Primary key auto-increment standar Laravel |
 | `name` | VARCHAR(255) | Nama lengkap pegawai |
 | `username` | VARCHAR(100) UNIQUE | Login identifier, lebih fleksibel dari email |
@@ -194,23 +194,16 @@ Database QueuePro dirancang dengan prinsip **normalisasi** dan **integritas data
 | `remember_token` | VARCHAR(100) | Fitur "Ingat Saya" di login |
 | `timestamps` | created_at, updated_at | Audit trail otomatis |
 
-**Mengapa `username` bukan `email`?**
-
-- ✅ Konteks rumah sakit/klinik: pegawai lebih familiar dengan username
-- ✅ Lebih pendek, mudah diingat
-- ✅ Tidak tergantung domain email perusahaan
-- ❌ Email bisa berubah jika pegawai pindah
-
-**Mengapa `loket` nullable?**
-
-- ✅ Superadmin tidak ditugaskan di loket tertentu
-- ✅ Hemat storage (NULL lebih kecil dari string kosong)
-- ✅ Query lebih mudah: `WHERE loket IS NOT NULL`
+> **Catatan Tambahan:**
+> * **Mengapa `username` bukan `email`?** Konteks rumah sakit/klinik: pegawai lebih familiar dengan username, lebih pendek, mudah diingat, dan tidak tergantung domain email perusahaan.
+> * **Mengapa `loket` nullable?** Superadmin tidak ditugaskan di loket tertentu, hemat storage (NULL lebih kecil dari string kosong), dan query lebih mudah.
+> 
+> 
 
 #### Tabel `queues`
 
 | Kolom | Tipe | Alasan |
-|-------|------|--------|
+| --- | --- | --- |
 | `id` | BIGINT UNSIGNED PK | Primary key standar |
 | `queue_date` | DATE | Pisahkan tanggal agar bisa query per hari |
 | `queue_number` | INT UNSIGNED | Nomor urut, auto-increment per hari |
@@ -231,14 +224,15 @@ Database QueuePro dirancang dengan prinsip **normalisasi** dan **integritas data
 // ✅ BENAR: Pisahkan tanggal dan nomor
 'queue_date' => '2026-06-24',
 'queue_number' => 1
+
 ```
 
 **Alasan:**
 
-- ✅ **Mudah di-query per hari:** `WHERE queue_date = today()`
-- ✅ **Nomor antrian kecil:** Hanya 1, 2, 3 (bukan 20260624001)
-- ✅ **Reset harian otomatis:** Max `queue_number` per hari
-- ✅ **Reporting mudah:** Hitung antrian per tanggal
+* ✅ **Mudah di-query per hari:** `WHERE queue_date = today()`
+* ✅ **Nomor antrian kecil:** Hanya 1, 2, 3 (bukan 20260624001)
+* ✅ **Reset harian otomatis:** Max `queue_number` per hari
+* ✅ **Reporting mudah:** Hitung antrian per tanggal
 
 #### 2. Status sebagai ENUM String
 
@@ -248,14 +242,15 @@ Database QueuePro dirancang dengan prinsip **normalisasi** dan **integritas data
 
 // ✅ BENAR: Menggunakan ENUM string
 'status' => 'menunggu'  // Self-documenting, mudah dibaca
+
 ```
 
 **Alasan:**
 
-- ✅ **Self-documenting** - Nilai menjelaskan dirinya sendiri
-- ✅ **Mudah di-debug** - Langsung terlihat status di database
-- ✅ **Type-safe** - Database menolak nilai invalid
-- ✅ **Blade friendly** - `@if($q->status == 'menunggu')` lebih readable
+* ✅ **Self-documenting** - Nilai menjelaskan dirinya sendiri
+* ✅ **Mudah di-debug** - Langsung terlihat status di database
+* ✅ **Type-safe** - Database menolak nilai invalid
+* ✅ **Blade friendly** - `@if($q->status == 'menunggu')` lebih readable
 
 #### 3. Foreign Key `admin_id` untuk Locking
 
@@ -270,14 +265,15 @@ $queue->update([
 if ($queue->admin_id !== auth()->id()) {
     abort(403, 'Antrian sedang ditangani admin lain');
 }
+
 ```
 
 **Alasan:**
 
-- ✅ **Mencegah konflik** - 2 admin tidak bisa handle antrian yang sama
-- ✅ **Audit trail** - Tahu siapa yang menangani antrian
-- ✅ **Nullable** - Antrian baru belum di-handle siapa pun
-- ✅ **Superadmin bypass** - Superadmin bisa edit semua (override)
+* ✅ **Mencegah konflik** - 2 admin tidak bisa handle antrian yang sama
+* ✅ **Audit trail** - Tahu siapa yang menangani antrian
+* ✅ **Nullable** - Antrian baru belum di-handle siapa pun
+* ✅ **Superadmin bypass** - Superadmin bisa edit semua (override)
 
 #### 4. Tidak Ada Tabel `loket` Terpisah
 
@@ -288,21 +284,22 @@ users: loket_id (FK)
 
 // ✅ SIMPLE: Langsung di users
 users: loket (VARCHAR)
+
 ```
 
 **Alasan:**
 
-- ✅ **Yakni principle** - "You Aren't Gonna Need It"
-- ✅ **Loket sederhana** - Hanya "Loket 1", "Loket 2", tidak butuh tabel terpisah
-- ✅ **Performa** - Tidak perlu JOIN untuk tampilkan loket
-- ❌ **Jika loket kompleks** (ada jadwal, kapasitas, dll) → baru pisah tabel
+* ✅ **YAGNI Principle** - "You Aren't Gonna Need It"
+* ✅ **Loket sederhana** - Hanya "Loket 1", "Loket 2", tidak butuh tabel terpisah
+* ✅ **Performa** - Tidak perlu JOIN untuk tampilkan loket
+* ❌ **Jika loket kompleks** (ada jadwal, kapasitas, dll) → baru pisah tabel
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Teknologi | Versi | Fungsi |
-|-----------|-------|--------|
+| --- | --- | --- |
 | **Laravel** | 9.x | Backend framework |
 | **PHP** | 8.2+ | Server-side language |
 | **MySQL** | 8.0+ | Database |
