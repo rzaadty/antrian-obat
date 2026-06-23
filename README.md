@@ -81,8 +81,7 @@ queuepro/
 │
 ├── resources/
 │   └── views/
-│       ├── welcome.blade.php           # Landing page
-│       ├── display-obat.blade.php      # Layar TV ruang tunggu
+│       ├── welcome.blade.php           # Layar TV ruang tunggu
 │       ├── login.blade.php             # Halaman login
 │       └── admin/
 │           ├── dashboard.blade.php     # Dashboard admin
@@ -116,7 +115,6 @@ QueueController.php  → Menghandle antrian & panggilan
 ```
 views/
 ├── welcome.blade.php        # Public (tanpa prefix)
-├── display-obat.blade.php   # Public (tanpa prefix)
 ├── login.blade.php          # Public (tanpa prefix)
 └── admin/                   # Protected (folder admin)
     ├── dashboard.blade.php
