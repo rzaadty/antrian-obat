@@ -13,11 +13,6 @@
 <h1 align="center">🏥 QueuePro - Sistem Antrian Digital</h1>
 
 <p align="center">
-  <b>Sistem Manajemen Antrian Modern untuk Rumah Sakit & Klinik</b><br>
-  <i>Dibangun dengan Laravel 11, Bootstrap 5.3, dan Web Speech API</i>
-</p>
-
-<p align="center">
   <a href="#-tentang-proyek">Tentang</a> •
   <a href="#-fitur-utama">Fitur</a> •
   <a href="#-struktur-file">Struktur File</a> •
@@ -31,30 +26,6 @@
 ## 📖 Tentang Proyek
 
 **QueuePro** adalah sistem antrian digital terpadu yang dirancang khusus untuk rumah sakit, klinik, dan fasilitas layanan kesehatan. Sistem ini menggantikan antrian konvensional dengan solusi digital yang modern, efisien, dan profesional.
-
-### 🎯 Masalah yang Diselesaikan
-
-| ❌ Masalah Lama | ✅ Solusi QueuePro |
-|----------------|-------------------|
-| Antrian kertas yang berantakan | Antrian digital terorganisir |
-| Pasien tidak tahu kapan dipanggil | Layar display real-time |
-| Petugas kesulitan mengelola antrian | Dashboard admin yang intuitif |
-| Tidak ada voice announcement | Text-to-Speech otomatis |
-| Multi-petugas saling tumpang tindih | Sistem locking otomatis |
-| Data antrian hilang | Database terpusat & aman |
-
-### 💡 Mengapa Laravel?
-
-Laravel dipilih sebagai framework utama karena:
-
-1. **Eloquent ORM** - Memudahkan manipulasi data antrian dengan sintaks yang ekspresif
-2. **Blade Template** - Memisahkan logika dan tampilan dengan bersih
-3. **Middleware** - Implementasi role-based access control yang elegan
-4. **Migration** - Versioning database yang terstruktur
-5. **Routing** - Pemisahan route public vs protected yang jelas
-6. **Community** - Dokumentasi lengkap dan komunitas besar
-
----
 
 ## ✨ Fitur Utama
 
