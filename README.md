@@ -292,7 +292,7 @@ users: loket (VARCHAR)
 
 **Alasan:**
 
-- ✅ **YAGNI Principle** - "You Aren't Gonna Need It"
+- ✅ **Yakni principle** - "You Aren't Gonna Need It"
 - ✅ **Loket sederhana** - Hanya "Loket 1", "Loket 2", tidak butuh tabel terpisah
 - ✅ **Performa** - Tidak perlu JOIN untuk tampilkan loket
 - ❌ **Jika loket kompleks** (ada jadwal, kapasitas, dll) → baru pisah tabel
